@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>マナー探偵団！ヒット＆ブロー</title>
+<style>
+:root{color-scheme:light;--ink:#4a3a2a;--pk:#ff6b8b;--or:#ffb020;--gr:#4cc38a;--bl:#4aa8ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0}
+body{font-family:"Hiragino Maru Gothic ProN","Zen Maru Gothic","M PLUS Rounded 1c","Yu Gothic",system-ui,sans-serif;background:linear-gradient(#fff6e0,#ffe6ee);color:var(--ink);touch-action:manipulation;overflow:hidden;-webkit-user-select:none;user-select:none}
+*{box-sizing:border-box}
+#app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);gap:6px;padding:6px 10px}
+header{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+h1{margin:0;font-size:clamp(15px,2.6vw,24px);flex:1 1 220px}
+.btn{min-height:56px;min-width:56px;border:0;border-radius:16px;background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:clamp(13px,1.9vw,17px);padding:0 14px;box-shadow:0 5px 0 #d9c7a5;cursor:pointer;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #d9c7a5}
+.btn.on{background:var(--gr);color:#fff;box-shadow:0 5px 0 #2f9b69}
+.btn:disabled{opacity:.45}
+.btn.go{background:var(--pk);color:#fff;box-shadow:0 5px 0 #c9456a}
+.btn.go:disabled{background:#ddd;box-shadow:0 5px 0 #bbb;color:#999}
+main{display:grid;grid-template-columns:1fr 1.5fr;gap:8px;min-height:0}
+@media(orientation:portrait){main{grid-template-columns:1fr;grid-template-rows:minmax(0,.7fr) minmax(0,1.7fr)}}
+.box{background:#fffdf5;border:3px solid #f0dcb0;border-radius:20px;padding:8px 10px;min-height:0;display:flex;flex-direction:column;gap:6px}
+.hl{overflow:auto;display:flex;flex-direction:column;gap:5px;flex:1;min-height:0}
+.h{background:#fff;border-radius:12px;padding:5px 8px;font-size:clamp(11px,1.5vw,14px);border:2px solid #f3e6c8}
+.h i{font-style:normal;display:inline-block;background:#f5ecd6;border-radius:8px;padding:1px 6px;margin:1px}
+.b{display:inline-block;border-radius:10px;padding:1px 8px;color:#fff;font-weight:700;margin-right:4px}
+.hit{background:var(--pk)}.blow{background:var(--or)}
+.owl{display:flex;gap:8px;align-items:center}
+.ow{font-size:clamp(36px,7vw,60px);position:relative;animation:bo 2s infinite}
+.ow s{position:absolute;right:-8px;bottom:-4px;font-size:.45em;text-decoration:none}
+@keyframes bo{50%{transform:translateY(-4px)}}
+.say{background:#fff;border:3px solid #f0dcb0;border-radius:16px;padding:6px 10px;flex:1;font-weight:700;font-size:clamp(12px,1.8vw,17px)}
+.q{font-weight:800;font-size:clamp(15px,2.4vw,22px);text-align:center;background:#e9f6ff;border-radius:14px;padding:5px}
+.slots{display:flex;gap:6px}
+.slot{flex:1;min-height:64px;border:3px dashed #e0b97a;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:clamp(12px,1.7vw,16px);padding:3px;background:#fff;cursor:pointer}
+.slot.f{border-style:solid;background:#fff2c9;animation:pop .2s}
+.slot small{display:block;opacity:.5}
+@keyframes pop{from{transform:scale(.85)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;flex:1;align-content:start;min-height:0}
+.card{display:flex;min-height:56px;border-radius:14px;background:#fff;border:3px solid #bfe3ff;overflow:hidden;box-shadow:0 4px 0 #9fcff2}
+.card.u{opacity:.3;pointer-events:none}.card.x{background:#eee;border-color:#ccc;box-shadow:0 4px 0 #ccc}.card.x .t{text-decoration:line-through;opacity:.5}
+.t{flex:1;border:0;background:none;font:inherit;font-weight:700;font-size:clamp(12px,1.7vw,16px);color:inherit;padding:2px 6px;cursor:pointer}
+.m{width:56px;border:0;border-left:2px dashed #cde;background:#f4faff;font-size:22px;cursor:pointer;color:#e0436b;font-weight:900}
+.acts{display:flex;gap:8px}.acts .btn{flex:1}
+#md{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;z-index:5;padding:14px}
+#mc{background:#fffdf5;border:4px solid #f0dcb0;border-radius:24px;max-width:560px;width:100%;max-height:92%;overflow:auto;padding:16px;text-align:center;display:flex;flex-direction:column;gap:10px}
+#mc h2{margin:0}.big{font-size:56px}.star{font-size:44px;color:#ffb020}
+.exp{background:#e9fbe9;border:3px solid #9fdca8;border-radius:16px;padding:10px;text-align:left;font-weight:600}
+.bg{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.bg div{background:#fff;border-radius:14px;padding:8px 4px;font-size:12px;font-weight:700;border:2px solid #f0dcb0}.bg b{display:block;font-size:34px}.bg .lk{filter:grayscale(1);opacity:.35}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:9}
+</style></head><body>
+<div id="app"><header>
+<h1>🔍 マナー探偵団！ヒット＆ブロー</h1>
+<button class="btn" id="l0" onclick="start(0)">🌱 1・2年</button>
+<button class="btn" id="l1" onclick="start(1)">🌿 3・4年</button>
+<button class="btn" id="l2" onclick="start(2)">🌳 5・6年</button>
+<button class="btn" id="l3" onclick="start(3)">🎮 ゲーム</button>
+<button class="btn" onclick="help()">❓</button>
+<button class="btn" onclick="book()">📖</button>
+<button class="btn" id="sd" onclick="mute()">🔊</button>
+</header><main id="mn"></main></div>
+<div id="md"><div id="mc"></div></div><canvas id="cf"></canvas>
+<script>
+const L=[
+{k:3,max:6,s:[2,4],q:[
+['きゅうしょくを たべる じゅんばん',['てを あらう','いただきますと いう','ごちそうさまと いう'],['はを みがく','ハンカチを ポケットに いれる'],'たべる まえに てを あらって、いただきます。おわったら ごちそうさま。たべものと つくった ひとに かんしゃの きもちを つたえるんだホ〜！',['🍙','おしょくじ めいじん']],
+['おともだちの いえに あがる とき',['ピンポンを おす','こんにちはと いう','くつを そろえる'],['てを あらう','かさを たたむ'],'まず げんかんで あいさつ。あがったら くつを そろえると、いえの ひとも きもちが いいホ〜！',['🏠','おじゃまします めいじん']],
+['ろうかを あるく とき',['みぎがわを あるく','ゆっくり あるく','かどで とまる'],['かいだんを のぼる','てすりを もつ'],'ろうかは みんなの みち。ゆっくり あるいて、かどで とまれば ぶつからないホ〜！',['🚶','あんぜん たんてい']],
+['てあらいの じゅんばん',['てを ぬらす','せっけんで あらう','ハンカチで ふく'],['タオルを かりる','うがいを する'],'ぬらして せっけんで あらい、ふくまでが てあらい。ばいきんを やっつけるホ〜！',['🧼','きれい マスター']],
+['あさ がっこうに ついたら',['あいさつを する','くつを ぬぐ','かばんを ロッカーに いれる'],['ぼうしを かぶる','かさを たたむ'],'げんきな あいさつから はじめよう。そのあと じゅんびを すると、いちにちが うまく いくホ〜！',['🌞','あいさつ マスター']]]},
+{k:3,max:7,s:[3,5],q:[
+['しょくいんしつに はいる とき',['ノックを する','「しつれいします」と 言う','用件を つたえる'],['プリントを くばる','教室の かぎを かりる','上ばきを 洗う'],'ノックと あいさつで 先生に 気づいてもらい、それから 用件を 話すのが 礼ぎ。じゅんばんが 大切だホ〜！',['🚪','ノック名人']],
+['電車や バスに のる とき',['ならんで まつ','おりる 人を 先に 通す','あいている 席に すわる'],['切ぷを 買う','おり口を さがす','つり革に つかまる'],'おりる 人が 先。みんなが 気持ちよく 使える ように するホ〜！',['🚌','のりもの 博士']],
+['電話を かける とき',['名前を 名のる','用件を 話す','「失礼します」と 言って 切る'],['メモを とる','番号を 調べる','相手の 声を 聞きとる'],'まず 名のって、用件を 手みじかに。さいごの あいさつで 気持ちよく おわれるホ〜！',['📞','でんわ マスター']],
+['ともだちに ものを かりる とき',['「かして」と おねがい','大切に つかう','お礼を 言って かえす'],['名前を 書く','ほかの 人に かしてあげる','おかしを 分ける'],'かりる ときは 一言 おねがい。大切に つかって お礼と ともに かえすと しんらいされるホ〜！',['🤝','しんらい名人']],
+['図書館で 本を よむ とき',['しずかに 入る','本を 大切に よむ','もとの 場所に もどす'],['貸出カードを つくる','本を 買う','感想文を 書く'],'しずかに すごし、本は 大切に。もどすと 次の 人が さがしやすいホ〜！',['📚','としょかん 名人']]]},
+{k:4,max:8,s:[4,6],q:[
+['和食の 配膳と 食べ始め',['ごはんを 左手前に おく','しるものを 右手前に おく','手を 合わせて いただきます','はしを 持って 食べ始める'],['おしぼりで 手を ふく','おかずを 左奥に おく'],'ごはんは 左、しるは 右が 基本。手を 合わせてから はしを 持つ。じゅんばんを まもると 見た目も きれいだホ〜！',['🍱','お食事名人']],
+['お客さんへの お茶出し',['ノックして 入る','お客さんから 先に 出す','両手で「どうぞ」と おく','一礼して 静かに 下がる'],['お客さんの 名前を 聞く','お茶を わかす'],'相手を 尊重して 両手で ていねいに。入室から 退出まで 流れが 大切だホ〜！',['🍵','おもてなし 名人']],
+['エレベーターの 乗り降り',['ボタンを 押して 待つ','降りる 人を 先に 通す','奥から つめて 乗る','目的の 階で 順に 降りる'],['階段の 場所を 聞く','開くボタンを 長く 押す'],'降りる 人が 先、乗る 人は 奥から つめる。みんなが スムーズに 動けるホ〜！',['🛗','エレベーター 名人']],
+['インターネット・SNSの マナー',['相手の 気持ちを 考える','許可を とって 写真を のせる','公開前に 見直す','困ったら 大人に 相談する'],['アイコンを 変える','フォロワーを 数える'],'一度 のせた ものは 消えにくい。考える→許可→見直す→相談の 順で 自分と 相手を 守るホ〜！',['📱','ネット 名人']],
+['冠婚葬祭の 受付',['静かに 受付に 行く','お悔やみを 述べる','香典を 両手で わたす','記帳を する'],['お返しを 用意する','席を さがす'],'悲しみの 場では 静かに ふるまい、言葉と 気づかいを 大切に。わたして から 記帳 だホ〜！',['🕊️','れいぎ 名人']],
+['病院の 受付と 待ち方',['名前を 伝える','保険証を 出す','順番を 静かに 待つ','呼ばれたら 返事をする'],['お薬を もらう','会計を する'],'病院は 具合の わるい 人が いる 場所。静かに 待ち、呼ばれたら はっきり 返事するホ〜！',['🏥','おもいやり 名人']]]}];
+L.push({k:3,max:6,s:[3,5],q:[]});const N=['🌱 1・2年生コース','🌿 3・4年生コース','🌳 5・6年生コース','🎮 たのしい ゲーム'];
+let li=0,qi=0,Q,K,cards,g,mk,hist,done,snd=1,AC,ow=['🦉','😊','事件だホ〜！ じゅんばんを すいりしよう！'];
+const $=s=>document.querySelector(s);
+function sv(){try{return JSON.parse(localStorage.mt)||{}}catch(e){return{}}}
+function put(o){try{localStorage.mt=JSON.stringify(o)}catch(e){}}
+function tone(f,t,d,ty,v){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),a=AC.createGain();o.type=ty||'sine';o.frequency.value=f;const s=AC.currentTime+t;a.gain.setValueAtTime(v||.2,s);a.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(a);a.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const pon=()=>{tone(700,0,.1,'triangle');tone(1000,.04,.08,'triangle')};
+const jan=()=>{[0,.18].forEach((t,i)=>[262,330,392].map(f=>tone(f*(i?1.5:1),t,.4,'square',.07)))};
+const fan=()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,i*.14,.35,'triangle',.18));
+function mute(){snd=!snd;$('#sd').textContent=snd?'🔊':'🔇'}
+function say(m,e,f){ow=['🦉',e,m]}
+function start(l,keep){const F=sv();if((l==3&&F.f1&&(F.w||0)<3)||(l<3&&!F.f1)){show(`<div class="big">🔒</div><h2>まだ あそべないよ</h2><div class="exp">${l==3?'マナー探偵団で 3もん クリアすると また あそべるよ！':'まず ゲームで れんしゅうしよう！'}</div><button class="btn go" onclick="closeM()">とじる</button>`);return}li=l;const n=L[l].q.length;qi=keep?qi:Math.floor(Math.random()*n);if(l==3){const S=[['🐶','🐱','🐰','🐼','🦊','🐸'],['🍎','🍌','🍇','🍓','🍊','🍉'],['🚗','🚃','✈️','🚲','🚢','🚀']];const p=S[Math.floor(Math.random()*3)].slice().sort(()=>Math.random()-.5);Q=['えを ただしい じゅんばんに ならべよう！',p.slice(0,3),p.slice(3),'ヒットと ブローの つかいかた、ばっちりだホ〜！',['🎮','ゲーム名人']]}else Q=L[l].q[qi];K=L[l].k;
+cards=Q[1].concat(Q[2]).map((t,id)=>({t,id})).sort(()=>Math.random()-.5);
+g=Array(K).fill(null);mk={};hist=[];done=0;closeM();
+say(`${K}つの じゅんばんを あてるホ〜！ ${L[l].max}かいまで だよ！`,'😊');render()}
+function render(){
+[0,1,2,3].forEach(i=>$('#l'+i).className='btn'+(i==li?' on':''));const F=sv();[0,1,2].forEach(i=>$('#l'+i).disabled=!F.f1);$('#l3').textContent=(!F.f1||(F.w||0)>=3)?'🎮 ゲーム':'🔒 ゲーム';
+const used=g.filter(x=>x!==null),full=used.length==K;
+$('#mn').innerHTML=`<div class="box"><b>🔎 すいり りれき（${hist.length}/${L[li].max}）</b><div class="hl">${hist.length?hist.slice().reverse().map((h,i)=>`<div class="h">${hist.length-i}かいめ ${h.g.map(id=>`<i>${cards.find(c=>c.id==id).t}</i>`).join('')}<br><span class="b hit">🎯 ぴったり ${h.h}</span><span class="b blow">💡 ばしょちがい ${h.b}</span></div>`).join(''):'<div class="h">まだ すいり していないホ〜</div>'}</div></div>
+<div class="box"><div class="owl"><div class="ow">${ow[0]}<s>${ow[1]}</s></div><div class="say">${ow[2]}</div></div>
+<div class="q">${N[li].slice(0,2)} ${Q[0]}</div><div style="text-align:center;font-weight:700;font-size:clamp(11px,1.6vw,14px)">カードを ${K}まい えらんで、ただしい じゅんばんに ならべよう</div>
+<div class="slots">${g.map((id,i)=>`<div class="slot${id!==null?' f':''}" onclick="rm(${i})">${id!==null?cards.find(c=>c.id==id).t:`<small>${i+1}ばんめ</small>`}</div>`).join('')}</div>
+<div class="cards">${cards.map(c=>`<div class="card${used.includes(c.id)?' u':''}${mk[c.id]==1?' x':''}"><button class="t" onclick="put_(${c.id})">${c.t}</button><button class="m" onclick="memo(${c.id})">${['📝','✖'][mk[c.id]||0]}</button></div>`).join('')}</div>
+<div class="acts"><button class="btn" onclick="clr()">↩ ぜんぶ もどす</button><button class="btn go" ${full&&!done?'':'disabled'} onclick="sub()">🔍 すいり けってい！</button></div></div>`}
+function put_(id){const i=g.indexOf(null);if(i<0||done)return;g[i]=id;pon();render()}
+function rm(i){if(g[i]===null||done)return;g[i]=null;tone(400,0,.1,'triangle');render()}
+function clr(){g=Array(K).fill(null);pon();render()}
+function memo(id){mk[id]=((mk[id]||0)+1)%2;tone(900,0,.05);render()}
+function sub(){if(g.includes(null))return;let h=0,b=0;g.forEach((id,i)=>{if(id==i)h++;else if(id<K)b++});
+hist.push({g:g.slice(),h,b});jan();
+if(h==K)return win();
+const e=h+b==0?['ぜんぶ ちがうホ〜！ つかわない カードが あるかも…','😲']:h>0?['おっ、いい線いってるホ〜！','😊']:['ばしょが 惜しいホ〜！ カードは あっているよ！','🤔'];
+if(hist.length>=L[li].max)return lose();
+say(e[0],e[1]);g=Array(K).fill(null);render()}
+function win(){done=1;const t=hist.length,s=L[li].s,st=t<=s[0]?3:t<=s[1]?2:1,ti=['見習い探偵','名探偵','伝説のマナー探偵'][st-1];
+const d=sv();const key=li+'-'+qi;d[key]=Math.max(d[key]||0,st);if(li==3)d.f1=1;else d.w=(d.w||0)+1;put(d);say('大せいかいだホ〜！','🎉');render();fan();confetti();
+const nx=L[li].q.length;
+setTimeout(()=>show(`<div class="big">🎉</div><h2>じけん かいけつ！</h2><div class="star">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><b>${t}かいで クリア！ 称号：${ti}</b><div class="exp">🦉 なるほど！マナー解説<br>${Q[3]}</div><div>${Q[4][0]} 「${Q[4][1]}」バッジを ゲット！</div>${li<3&&sv().w==3?'<div class="exp">🎮 たのしい ゲームが また あそべるように なったホ〜！</div>':''}${li==3&&!sv().w?'<div class="exp">れんしゅう かんりょう！ つぎは いよいよ マナー探偵団だホ〜！</div>':''}<div class="acts">${li==3?'<button class="btn" onclick="start(3)">もういちど</button><button class="btn go" onclick="title()">マナー探偵団へ ▶</button>':'<button class="btn" onclick="book()">📖 ずかん</button><button class="btn go" onclick="qi=(qi+1)%'+nx+';start(li,1)">つぎの じけんへ ▶</button>'}</div>`),700)}
+function lose(){done=1;say('ざんねん…こたえを みてみよう！','😢');render();
+show(`<div class="big">😢</div><h2>もういちど ちょうせん！</h2><div class="exp"><b>せいかいの じゅんばん</b><br>${Q[1].map((x,i)=>`${i+1}. ${x}`).join('<br>')}<br><br>${Q[3]}</div><div class="acts"><button class="btn go" onclick="start(li,1)">もういちど！</button><button class="btn" onclick="qi=(qi+1)%${L[li].q.length};start(li,1)">べつの もんだい</button></div>`)}
+function show(h){$('#mc').innerHTML=h;$('#md').style.display='flex'}
+function closeM(){$('#md').style.display='none'}
+function book(){const d=sv();let n=0,h='';L.slice(0,3).forEach((l,i)=>{h+=`<b>${N[i]}</b><div class="bg">${l.q.map((q,j)=>{const s=d[i+'-'+j];if(s)n++;return`<div class="${s?'':'lk'}"><b>${s?q[4][0]:'❔'}</b>${s?q[4][1]:'？？？'}<br>${s?'★'.repeat(s):''}</div>`}).join('')}</div>`});
+show(`<h2>📖 マナーバッジ図鑑 (${n}/16)</h2>${h}<button class="btn go" onclick="closeM()">とじる</button>`)}
+function help(){const S=[['🔍','マナーたんていに なろう！','カードを ただしい じゅんばんに ならべよう！ ぜんぶ あたれば クリア！ ヒントは 🎯と 💡だよ。'],['🎯','ヒット','カードも ならぶ ばしょも ピッタリ！<br><br>🅰️ → 🅰️　<span class="b hit">🎯 1</span>'],['💡','ブロー','カードは あっているけど、ばしょが ちがう！<br><br>🅰️🅱️ ↔ 🅱️🅰️　<span class="b blow">💡 2</span>'],['📝','メモきのう','カードの みぎの ボタンで ✖を つけると「つかわない」の めじるしに なるよ！']];let i=0;
+const r=()=>show(`<div class="big">${S[i][0]}</div><h2>${S[i][1]}</h2><div class="exp">${S[i][2]}</div><div>${i+1} / ${S.length}</div><button class="btn go" id="nx">${i<S.length-1?'つぎへ ▶':'はじめる！'}</button>`);
+r();$('#mc').onclick=e=>{if(e.target.id=='nx'){if(i<S.length-1){i++;r()}else{closeM();$('#mc').onclick=null;const d=sv();d.seen=1;put(d)}}}}
+function title(){show(`<div class="big">🦉🔍</div><h2>マナー探偵団！<br>ヒット＆ブロー</h2><div>コースを えらんでね</div><button class="btn go" onclick="start(0)">🌱 1・2年生（かんたん）</button><button class="btn go" onclick="start(1)">🌿 3・4年生（ふつう）</button><button class="btn go" onclick="start(2)">🌳 5・6年生（ちょうせん）</button>${(sv().w||0)>=3?'<button class="btn" onclick="start(3)">🎮 たのしい ゲーム</button>':''}<div class="acts"><button class="btn" onclick="help()">❓ あそびかた</button><button class="btn" onclick="book()">📖 ずかん</button></div>`)}
+function confetti(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height/2,v:2+Math.random()*4,w:6+Math.random()*8,r:Math.random()*6,c:`hsl(${Math.random()*360},90%,60%)`,d:Math.random()*2-1}));let f=0;
+(function a(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.x+=p.d*2;p.r+=.1;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.w/2,-p.w/4,p.w,p.w/2);x.restore()});if(++f<220)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})()}
+if(!sv().f1){start(3);if(!sv().seen)setTimeout(help,0)}else{start(0);title()}
+</script></body></html>
